@@ -1,11 +1,10 @@
 import { ExpandMoreRounded } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import SettingForm, { ProChip } from "../../../Pages/Setting/SettingForm.tsx";
 import { MagicVar } from "../../Common/MagicVarDialog.tsx";
-import ProDialog from "../../Common/ProDialog.tsx";
 import { SettingContext } from "../SettingWrapper.tsx";
 import { SettingSection, SettingSectionContent } from "../Settings.tsx";
 import { AccordionSummary, StyledAccordion } from "../UserSession/SSOSettings.tsx";
@@ -77,7 +76,6 @@ const userMagicVars: MagicVar[] = [
 const EmailTemplates: React.FC = () => {
   const { t } = useTranslation("dashboard");
   const { setSettings, values } = useContext(SettingContext);
-  const [proOpen, setProOpen] = useState(false);
 
   // Template setting keys
   const templateSettings = [
@@ -123,14 +121,8 @@ const EmailTemplates: React.FC = () => {
     },
   ];
 
-  const handleProClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setProOpen(true);
-  };
-
   return (
     <SettingSection>
-      <ProDialog open={proOpen} onClose={() => setProOpen(false)} />
       <Typography variant="h6" gutterBottom>
         {t("settings.emailTemplates")}
       </Typography>
@@ -139,9 +131,7 @@ const EmailTemplates: React.FC = () => {
           {templateSettings.map((template) => (
             <StyledAccordion
               disableGutters
-              onClick={template.pro ? handleProClick : undefined}
               key={template.key}
-              expanded={template.pro ? false : undefined}
               TransitionProps={{ unmountOnExit: true }}
             >
               <AccordionSummary expandIcon={<ExpandMoreRounded />}>
