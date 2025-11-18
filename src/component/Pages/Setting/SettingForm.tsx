@@ -1,6 +1,5 @@
 import { Chip, Grid2, Typography, styled } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
-import ProDialog from "../../Admin/Common/ProDialog";
+import { useEffect } from "react";
 
 export const ProChip = styled(Chip)(({ theme }) => ({
   marginLeft: 8,
@@ -31,7 +30,6 @@ const SettingForm = ({
   anchorId,
   pro,
 }: SettingFormProps) => {
-  const [proOpen, setProOpen] = useState(false);
   useEffect(() => {
     if (anchorId && window.location.hash === `#${anchorId}`) {
       const anchor = document.getElementById(`anchor-${anchorId}`);
@@ -42,16 +40,6 @@ const SettingForm = ({
       }
     }
   }, [anchorId]);
-
-  const handleProClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (pro) {
-        e.stopPropagation();
-        setProOpen(true);
-      }
-    },
-    [pro],
-  );
 
   const inner = (
     <>
@@ -75,10 +63,9 @@ const SettingForm = ({
             {pro && <ProChip label="Pro" color="primary" size="small" />}
           </Typography>
         )}
-        <div onClick={handleProClick}>{children}</div>
+        <div>{children}</div>
       </Grid2>
       {secondary && secondary}
-      {pro && <ProDialog open={proOpen} onClose={() => setProOpen(false)} />}
     </>
   );
   if (noContainer) {
