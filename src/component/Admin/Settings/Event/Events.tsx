@@ -9,11 +9,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { AuditLogType } from "../../../../api/explorer";
 import { ProChip } from "../../../Pages/Setting/SettingForm";
-import ProDialog from "../../Common/ProDialog";
 import { NoMarginHelperText, SettingSection, SettingSectionContent } from "../Settings";
 import { SettingContext } from "../SettingWrapper";
 
@@ -128,16 +127,9 @@ export const getEventName = (eventType: number): string => {
 const Events = () => {
   const { t } = useTranslation("dashboard");
   const { formRef, setSettings, values } = useContext(SettingContext);
-  const [proOpen, setProOpen] = useState(false);
-
-  const handleProClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setProOpen(true);
-  };
 
   return (
     <Box component={"form"} ref={formRef} onSubmit={(e) => e.preventDefault()}>
-      <ProDialog open={proOpen} onClose={() => setProOpen(false)} />
       <Stack spacing={5}>
         <SettingSection>
           <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
@@ -148,7 +140,7 @@ const Events = () => {
           </Typography>
 
           {Object.entries(eventCategories).map(([categoryKey, category]) => (
-            <SettingSection key={categoryKey} onClick={handleProClick}>
+            <SettingSection key={categoryKey}>
               <Box>
                 <Typography variant="subtitle1">{t(category.title)}</Typography>
                 <Typography variant="body2" color="text.secondary">

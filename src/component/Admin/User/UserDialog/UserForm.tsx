@@ -14,7 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { sendCalibrateUserStorage } from "../../../../api/api";
 import { UserStatus } from "../../../../api/dashboard";
@@ -27,7 +27,6 @@ import Delete from "../../../Icons/Delete";
 import SettingForm, { ProChip } from "../../../Pages/Setting/SettingForm";
 import { CapacityBar } from "../../../Pages/Setting/StorageSetting";
 import GroupSelectionInput from "../../Common/GroupSelectionInput";
-import ProDialog from "../../Common/ProDialog";
 import { NoMarginHelperText } from "../../Settings/Settings";
 import { UserDialogContext } from "./UserDialog";
 
@@ -38,7 +37,6 @@ const UserForm = ({ reload, setLoading }: { reload: () => void; setLoading: (loa
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { t } = useTranslation("dashboard");
   const { formRef, values, setUser } = useContext(UserDialogContext);
-  const [proOpen, setProOpen] = useState(false);
 
   const removeAvatar = useCallback(() => {
     setUser((prev) => ({ ...prev, avatar: undefined }));
@@ -109,7 +107,6 @@ const UserForm = ({ reload, setLoading }: { reload: () => void; setLoading: (loa
 
   return (
     <Box component={"form"} ref={formRef} onSubmit={(e) => e.preventDefault()}>
-      <ProDialog open={proOpen} onClose={() => setProOpen(false)} />
       <Stack spacing={isMobile ? 2 : 3} direction={isMobile ? "column" : "row"}>
         <Stack spacing={isMobile ? 2 : 3} direction={"column"} sx={{ minWidth: 200 }}>
           <SettingForm title={t("user.avatar")} noContainer lgWidth={12}>

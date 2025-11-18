@@ -1,14 +1,13 @@
 import { Icon as Iconify } from "@iconify/react";
 import { Box, SvgIconProps, useTheme } from "@mui/material";
 import SvgIcon from "@mui/material/SvgIcon/SvgIcon";
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GroupPermission } from "../../../api/user.ts";
 import { useAppSelector } from "../../../redux/hooks.ts";
 import SessionManager from "../../../session";
 import { GroupBS } from "../../../session/utils.ts";
-import ProDialog from "../../Admin/Common/ProDialog.tsx";
 import BoxMultiple from "../../Icons/BoxMultiple.tsx";
 import BoxMultipleFilled from "../../Icons/BoxMultipleFilled.tsx";
 import CloudDownload from "../../Icons/CloudDownload.tsx";
@@ -87,18 +86,14 @@ export const SideNavItemComponent = ({ item }: { item: NavigationItem }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  const [proOpen, setProOpen] = useState(false);
   const active = useMemo(() => {
     return location.pathname == item.path || location.pathname.startsWith(item.path + "/");
   }, [location.pathname, item.path]);
   return (
     <>
-      {item.pro && <ProDialog open={proOpen} onClose={() => setProOpen(false)} />}
       <SideNavItem
         key={item.label}
-        onClick={() =>
-          item.pro ? setProOpen(true) : item.iconifyName ? window.open(item.path, "_blank") : navigate(item.path)
-        }
+        onClick={() => (item.iconifyName ? window.open(item.path, "_blank") : navigate(item.path))}
         label={
           item.pro ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
